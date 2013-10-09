@@ -2,12 +2,11 @@ package tomato3017.miscadmintools.commands;
 
 import java.text.DecimalFormat;
 
-import tomato3017.miscadmintools.util.MiscUtil;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraftforge.common.DimensionManager;
+import tomato3017.miscadmintools.util.MiscUtil;
 
 public class CommandTPS extends CommandBase
 {

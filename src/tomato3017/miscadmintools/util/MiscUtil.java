@@ -1,8 +1,6 @@
 package tomato3017.miscadmintools.util;
 
 import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.server.command.ForgeCommand;
 
 public class MiscUtil
 {
