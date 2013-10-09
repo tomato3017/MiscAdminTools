@@ -11,6 +11,7 @@ import net.minecraftforge.common.Configuration;
 import tomato3017.miscadmintools.commands.CommandMemoryUsage;
 import tomato3017.miscadmintools.commands.CommandTPS;
 import tomato3017.miscadmintools.handlers.PostLaunchCommandsHandler;
+import tomato3017.miscadmintools.handlers.TPSStatsHandler;
 import tomato3017.miscadmintools.lib.Reference;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -28,6 +29,9 @@ public class MiscAdminTools
 	private static Logger logger;
 
 	private static boolean postLaunchCommandEnabled = true;
+	private static boolean tpsStats = true;
+	private static boolean logOnlyLowTPS = false;
+	
 	private static String configFolder = null;
 
 	// Settings
@@ -60,6 +64,8 @@ public class MiscAdminTools
 					"Commands in postlaunchcommands.txt will run approximately 5 seconds after server load")
 					.getBoolean(true);
 			
+			tpsStats = config.get("general", "runTPSStats", true, "Will run the TPS stats logger").getBoolean(true);
+			logOnlyLowTPS = config.get("general", "logOnlyLowTPS", false, "Will only output to log if tps is below 20").getBoolean(false);
 			
 			config.save();
 
@@ -76,8 +82,10 @@ public class MiscAdminTools
 	{
 
 		if (isPostLaunchCommandEnabled())
-			TickRegistry.registerScheduledTickHandler(
-					new PostLaunchCommandsHandler(postLaunchCommands), Side.SERVER);
+			TickRegistry.registerScheduledTickHandler(new PostLaunchCommandsHandler(postLaunchCommands), Side.SERVER);
+		
+		if (isTpsStatsEnabled())
+			TickRegistry.registerScheduledTickHandler(new TPSStatsHandler(), Side.SERVER);
 	}
 
 	@EventHandler
@@ -138,6 +146,16 @@ public class MiscAdminTools
 	public static boolean isPostLaunchCommandEnabled()
 	{
 		return postLaunchCommandEnabled;
+	}
+
+	public static boolean isTpsStatsEnabled()
+	{
+		return tpsStats;
+	}
+
+	public static boolean isLogOnlyLowTPS()
+	{
+		return logOnlyLowTPS;
 	}
 
 	public static String getModConfigFolder()

@@ -12,4 +12,6 @@ public class Reference
 	public static final String VERSION = VERSION_MAJOR + "." + VERSION_MINOR + "." + VERSION_REVISION;
 	
 	public static final String VERSION_STRING = MOD_NAME + " v" + VERSION;
+	
+	public static final int TPS_STATS_TICK = 1200; //Every Minute
 }
