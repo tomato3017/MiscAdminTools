@@ -2,16 +2,15 @@ package tomato3017.miscadmintools;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.apache.commons.io.IOUtils;
-
 import net.minecraftforge.common.Configuration;
+import tomato3017.miscadmintools.commands.CommandMemoryUsage;
+import tomato3017.miscadmintools.handlers.PostLaunchCommandsHandler;
+import tomato3017.miscadmintools.lib.Reference;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -20,9 +19,6 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
-import tomato3017.miscadmintools.commands.CommandMemoryUsage;
-import tomato3017.miscadmintools.handlers.PostLaunchCommandsHandler;
-import tomato3017.miscadmintools.lib.Reference;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION)
 @NetworkMod(clientSideRequired = false, serverSideRequired = false)
@@ -44,7 +40,7 @@ public class MiscAdminTools
 
 		Configuration config = null;
 		configFolder = event.getModConfigurationDirectory().getAbsolutePath()
-				+ File.pathSeparator + Reference.MOD_ID + File.pathSeparator;
+				+ File.separator + Reference.MOD_ID + File.separator;
 
 		try
 		{
@@ -80,7 +76,7 @@ public class MiscAdminTools
 
 		if (isPostLaunchCommandEnabled())
 			TickRegistry.registerScheduledTickHandler(
-					new PostLaunchCommandsHandler(), Side.SERVER);
+					new PostLaunchCommandsHandler(postLaunchCommands), Side.SERVER);
 	}
 
 	@EventHandler

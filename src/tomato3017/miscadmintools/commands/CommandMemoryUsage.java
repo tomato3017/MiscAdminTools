@@ -1,6 +1,5 @@
 package tomato3017.miscadmintools.commands;
 
-import tomato3017.miscadmintools.util.PlayerUtil;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatMessageComponent;

@@ -1,7 +1,6 @@
 package tomato3017.miscadmintools.util;
 
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 
 
