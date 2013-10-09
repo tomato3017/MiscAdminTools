@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import net.minecraftforge.common.Configuration;
 import tomato3017.miscadmintools.commands.CommandMemoryUsage;
+import tomato3017.miscadmintools.commands.CommandTPS;
 import tomato3017.miscadmintools.handlers.PostLaunchCommandsHandler;
 import tomato3017.miscadmintools.lib.Reference;
 import cpw.mods.fml.common.Mod;
@@ -83,6 +84,7 @@ public class MiscAdminTools
 	public void serverStarting(FMLServerStartingEvent event)
 	{
 		event.registerServerCommand(new CommandMemoryUsage());
+		event.registerServerCommand(new CommandTPS());
 
 	}
 
