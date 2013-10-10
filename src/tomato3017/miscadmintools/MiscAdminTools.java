@@ -12,12 +12,14 @@ import tomato3017.miscadmintools.commands.CommandMemoryUsage;
 import tomato3017.miscadmintools.commands.CommandTPS;
 import tomato3017.miscadmintools.handlers.PostLaunchCommandsHandler;
 import tomato3017.miscadmintools.handlers.TPSStatsHandler;
+import tomato3017.miscadmintools.handlers.TPSStatsSavingHandler;
 import tomato3017.miscadmintools.lib.Reference;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -82,10 +84,15 @@ public class MiscAdminTools
 	{
 
 		if (isPostLaunchCommandEnabled())
+		{
+			debugMessage("Registering Post Launch Handler");
 			TickRegistry.registerScheduledTickHandler(new PostLaunchCommandsHandler(postLaunchCommands), Side.SERVER);
-		
+		}
 		if (isTpsStatsEnabled())
+		{
+			debugMessage("Registering TPS Stats Handler");
 			TickRegistry.registerScheduledTickHandler(new TPSStatsHandler(), Side.SERVER);
+		}
 	}
 
 	@EventHandler
@@ -96,6 +103,11 @@ public class MiscAdminTools
 
 	}
 
+	@EventHandler
+	public void serverStopping(FMLServerStoppingEvent event)
+	{
+		TPSStatsSavingHandler.stopThreads();
+	}
 	private List<String> getPostLaunchCommands()
 	{
 		List<String> commands = new ArrayList<String>();
@@ -161,5 +173,13 @@ public class MiscAdminTools
 	public static String getModConfigFolder()
 	{
 		return configFolder;
+	}
+	
+	public static void debugMessage(String message)
+	{
+		if(Reference.DEBUG)
+		{
+			getLogger().info("DEBUG:" + message);
+		}
 	}
 }

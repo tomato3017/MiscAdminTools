@@ -12,10 +12,22 @@ import cpw.mods.fml.common.TickType;
 public class TPSStatsHandler implements IScheduledTickHandler
 {
 
+	private final Thread tpsSavingThread = new Thread(new TPSStatsSavingHandler(MiscAdminTools.getModConfigFolder() + "tpsstats.log"));
+
+	
+	
+	public TPSStatsHandler()
+	{
+		tpsSavingThread.setName("MiscAdminTools-TPSSavingThread");
+		tpsSavingThread.start();
+	}
+
 	@Override
 	public void tickStart(EnumSet<TickType> type, Object... tickData)
 	{
 		double tps = MiscUtil.getTPSMean();
+		
+		MiscAdminTools.debugMessage("TPS Stats Tick");
 		
 		if(MiscAdminTools.isLogOnlyLowTPS() && tps < 20d)
 		{

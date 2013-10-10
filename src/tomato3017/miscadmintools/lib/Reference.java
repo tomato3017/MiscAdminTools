@@ -13,5 +13,7 @@ public class Reference
 	
 	public static final String VERSION_STRING = MOD_NAME + " v" + VERSION;
 	
-	public static final int TPS_STATS_TICK = 1200; //Every Minute
+	public static final int TPS_STATS_TICK = 200; //Every Minute
+	
+	public static final boolean DEBUG = true;
 }
